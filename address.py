@@ -3,7 +3,8 @@ import shutil
 from pypdf import PdfReader
 
 INPUT_FOLDER = "output"
-OUTPUT_FOLDER = "peripheral"
+PERIPHERAL_FOLDER = "peripheral"
+NON_PERIPHERAL_FOLDER = "non_peripheral"
 
 TARGET = "PERIPHERAL"
 
@@ -20,7 +21,7 @@ def file_contains_target(file_path):
             nonlocal found
 
             if found:
-                return  # stop extra work once found
+                return
 
             x = tm[4]
             text_clean = text.strip()
@@ -37,21 +38,24 @@ def file_contains_target(file_path):
         page.extract_text(visitor_text=visitor)
 
         if found:
-            break  # stop scanning more pages
+            break
 
     return found
 
 
-# Ensure output folder exists
-os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+os.makedirs(PERIPHERAL_FOLDER, exist_ok=True)
+os.makedirs(NON_PERIPHERAL_FOLDER, exist_ok=True)
 
 
-# Process all PDFs
 for filename in os.listdir(INPUT_FOLDER):
-    if filename.endswith(".pdf"):
+    if filename.lower().endswith(".pdf"):
         input_path = os.path.join(INPUT_FOLDER, filename)
 
         if file_contains_target(input_path):
-            output_path = os.path.join(OUTPUT_FOLDER, filename)
-            shutil.copy(input_path, output_path)
-            print(f"Copied: {filename}")
+            output_path = os.path.join(PERIPHERAL_FOLDER, filename)
+            shutil.move(input_path, output_path)
+            print(f"Moved to peripheral: {filename}")
+        else:
+            output_path = os.path.join(NON_PERIPHERAL_FOLDER, filename)
+            shutil.move(input_path, output_path)
+            print(f"Moved to non-peripheral: {filename}")

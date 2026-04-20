@@ -2,7 +2,7 @@ import os
 import re
 from pypdf import PdfReader
 
-INPUT_FOLDER = "input"
+INPUT_FOLDER = "output"
 
 
 def clean_filename(text):

@@ -1,8 +1,8 @@
 from pypdf import PdfReader, PdfWriter
 import os
 
-input_pdf = "input/input.pdf"
-output_dir = "output"
+input_pdf = "../input/input.pdf"
+output_dir = "../generated/split&named"
 
 os.makedirs(output_dir, exist_ok=True)
 

@@ -2,9 +2,9 @@ import os
 import shutil
 from pypdf import PdfReader
 
-INPUT_FOLDER = "output"
-PERIPHERAL_FOLDER = "peripheral"
-NON_PERIPHERAL_FOLDER = "non_peripheral"
+INPUT_FOLDER = "../generated/split&named"
+PERIPHERAL_FOLDER = "../generated/peripheral"
+A_STORE_FOLDER = "../generated/A-store"
 
 TARGET = "PERIPHERAL"
 
@@ -44,7 +44,7 @@ def file_contains_target(file_path):
 
 
 os.makedirs(PERIPHERAL_FOLDER, exist_ok=True)
-os.makedirs(NON_PERIPHERAL_FOLDER, exist_ok=True)
+os.makedirs(A_STORE_FOLDER , exist_ok=True)
 
 
 for filename in os.listdir(INPUT_FOLDER):
@@ -56,6 +56,6 @@ for filename in os.listdir(INPUT_FOLDER):
             shutil.move(input_path, output_path)
             print(f"Moved to peripheral: {filename}")
         else:
-            output_path = os.path.join(NON_PERIPHERAL_FOLDER, filename)
+            output_path = os.path.join(A_STORE_FOLDER , filename)
             shutil.move(input_path, output_path)
             print(f"Moved to non-peripheral: {filename}")

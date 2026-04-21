@@ -2,7 +2,7 @@ import os
 import re
 from pypdf import PdfReader
 
-INPUT_FOLDER = "output"
+INPUT_FOLDER = "../generated/split&named"
 
 
 def clean_filename(text):

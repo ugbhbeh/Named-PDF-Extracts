@@ -4,3 +4,5 @@
 co-ordinates.txt
 /reference
 .txt
+__pycache__/
+*.pyc

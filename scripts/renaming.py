@@ -47,29 +47,34 @@ def extract_data(file_path):
     return po_number, product_name
 
 
-for filename in os.listdir(INPUT_FOLDER):
-    if not filename.lower().endswith(".pdf"):
-        continue
-
-    old_path = os.path.join(INPUT_FOLDER, filename)
-
-    try:
-        po, name = extract_data(old_path)
-
-        if not po or not name:
-            print(f"Skipping (missing data): {filename}")
+def run():
+    for filename in os.listdir(INPUT_FOLDER):
+        if not filename.lower().endswith(".pdf"):
             continue
 
-        safe_name = clean_filename(name)
-        new_filename = f"{po}_{safe_name}.pdf"
-        new_path = os.path.join(INPUT_FOLDER, new_filename)
+        old_path = os.path.join(INPUT_FOLDER, filename)
 
-        if os.path.exists(new_path):
-            print(f"Skipping (already exists): {new_filename}")
-            continue
+        try:
+            po, name = extract_data(old_path)
 
-        os.rename(old_path, new_path)
-        print(f"Renamed: {filename} -> {new_filename}")
+            if not po or not name:
+                print(f"Skipping (missing data): {filename}")
+                continue
 
-    except Exception as e:
-        print(f"Error with {filename}: {e}")
+            safe_name = clean_filename(name)
+            new_filename = f"{po}_{safe_name}.pdf"
+            new_path = os.path.join(INPUT_FOLDER, new_filename)
+
+            if os.path.exists(new_path):
+                print(f"Skipping (already exists): {new_filename}")
+                continue
+
+            os.rename(old_path, new_path)
+            print(f"Renamed: {filename} -> {new_filename}")
+
+        except Exception as e:
+            print(f"Error with {filename}: {e}")
+
+
+if __name__ == "__main__":
+    run()

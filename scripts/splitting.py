@@ -4,27 +4,32 @@ import os
 input_dir = "../input"
 output_dir = "../generated/split&named"
 
-os.makedirs(output_dir, exist_ok=True)
 
 
-for filename in os.listdir(input_dir):
-    if filename.lower().endswith(".pdf"):
+def run():
+    os.makedirs(output_dir, exist_ok=True)
 
-        input_path = os.path.join(input_dir, filename)
-        reader = PdfReader(input_path)
+    for filename in os.listdir(input_dir):
+        if filename.lower().endswith(".pdf"):
 
-        base_name = os.path.splitext(filename)[0]
+            input_path = os.path.join(input_dir, filename)
+            reader = PdfReader(input_path)
 
-        for i, page in enumerate(reader.pages):
-            writer = PdfWriter()
-            writer.add_page(page)
+            base_name = os.path.splitext(filename)[0]
 
-            output_path = os.path.join(
-                output_dir,
-                f"{base_name}_page_{i + 1}.pdf"
-            )
+            for i, page in enumerate(reader.pages):
+                writer = PdfWriter()
+                writer.add_page(page)
 
-            with open(output_path, "wb") as f:
-                writer.write(f)
+                output_path = os.path.join(
+                    output_dir,
+                    f"{base_name}_page_{i + 1}.pdf"
+                )
 
-        print(f"Split: {filename}")
+                with open(output_path, "wb") as f:
+                    writer.write(f)
+
+            print(f"Split: {filename}")
+
+if __name__ == "__main__":
+    run()
